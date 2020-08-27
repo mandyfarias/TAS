@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.materdei.tas.core;
+package br.edu.materdei.tas.core.entity;
 
 /**
  *
@@ -12,6 +12,8 @@ package br.edu.materdei.tas.core;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Column;
 
 
 @Entity
@@ -21,6 +23,8 @@ public class GrupoEntity {
     @GeneratedValue
     
     private Integer id;
+    
+    @Column(length = 30, nullable = false)
     private String nome;
 
     /**
