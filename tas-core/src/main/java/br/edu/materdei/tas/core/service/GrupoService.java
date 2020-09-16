@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.materdei.tas.core.exception;
+package br.edu.materdei.tas.core.service;
 
 import br.edu.materdei.tas.core.entity.GrupoEntity;
+import br.edu.materdei.tas.core.exception.ResourceNotFoundException;
 import br.edu.materdei.tas.core.repository.GrupoRepository;
-import br.edu.materdei.tas.core.service.IBaseService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  *
@@ -18,24 +21,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class GrupoService implements IBaseService<GrupoEntity>{
 
-    private GrupoRepository repostory;
+    @Autowired
+    private GrupoRepository repository;
     
     @Override
+    @Transactional
     public List<GrupoEntity> findAll() {
-        return repostory.findAll();
+        return repository.findAll();
     }
 
     @Override
+    @Transactional
     public GrupoEntity findById(Integer id) throws ResourceNotFoundException {
-    
+        return repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(id));
     }
 
     @Override
+    @Transactional
     public GrupoEntity save(GrupoEntity entity) {
+        return repository.saveAndFlush(entity);
     }
 
     @Override
     public void delete(Integer id) throws ResourceNotFoundException {
+        repository.deleteById(id);
     }
     
 }
